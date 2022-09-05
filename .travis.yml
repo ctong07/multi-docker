@@ -14,3 +14,10 @@ after_success:
   - docker build -t cherlyntong/multi-nginx ./nginx
   - docker build -t cherlyntong/multi-server ./server
   - docker build -t cherlyntong/multi-worker ./worker
+  # log in to docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # take images and push to docker hub
+  - docker push cherlyntong/multi-client
+  - docker push cherlyntong/multi-nginx
+  - docker push cherlyntong/multi-server
+  - docker push cherlyntong/multi-worker
