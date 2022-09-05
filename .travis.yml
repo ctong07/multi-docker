@@ -1,0 +1,16 @@
+language: generic 
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t cherlyntong/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true cherlyntong/react-test npm test
+
+after_success:
+  - docker build -t cherlyntong/multi-client ./client
+  - docker build -t cherlyntong/multi-nginx ./nginx
+  - docker build -t cherlyntong/multi-server ./server
+  - docker build -t cherlyntong/multi-worker ./worker
